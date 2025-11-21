@@ -1,0 +1,161 @@
+:root {
+  --glass-light: rgba(255,255,255,0.22);
+  --glass-dark: rgba(0,0,0,0.28);
+  --blur: 22px;
+  --radius: 22px;
+  --hover-scale: 1.06;
+
+  /* Dynamic wallpaper variable */
+  --wallpaper: none;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* FIXED WALLPAPER LAYER */
+body {
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+  transition: color .4s ease;
+  color: #fff;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: var(--wallpaper);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
+/* ALWAYS WHITE TEXT */
+*, body, .tile, .tile * {
+  color: #fff !important;
+}
+
+.top {
+  text-align: center;
+  padding: 30px 0;
+}
+
+/* MAIN LAYOUT */
+.metro-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 10px;
+  width: min(1100px, 95vw);
+  margin: 30px auto 0 auto;
+  align-items: center;
+}
+
+/* CENTER GRID */
+.center-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 152px);
+  gap: 10px;
+}
+
+.grid-wrapper {
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  min-height: calc(100vh - 200px);
+}
+
+/* RECTANGLES */
+.bottom-rect {
+  grid-column: span 2;
+  height: 152px;
+}
+
+.side-vert {
+  height: 472px;
+}
+
+/* TILE (DEFAULT = small tiles) */
+.tile {
+  background: var(--glass-light);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: var(--radius);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;   /* small tiles: logo top + text bottom */
+  align-items: center;
+
+  padding: 20px;
+  transition: .25s;
+  text-align: center;
+  cursor: pointer;
+}
+
+.tile img {
+  width: 55px;
+  margin: 10px 0 0 0;
+}
+
+.tile span,
+.tile p,
+.tile h3 {
+  margin-bottom: 10px;
+}
+
+.tile:hover {
+  transform: scale(var(--hover-scale));
+  background: rgba(255,255,255,0.32);
+  box-shadow: 0 28px 55px rgba(0,0,0,0.45);
+}
+
+/* BIG RECTANGLES CENTER CONTENT */
+.side-vert.tile,
+.bottom-rect.tile {
+  justify-content: center !important;     /* override small tile layout */
+}
+
+.side-vert.tile img,
+.bottom-rect.tile img {
+  margin: 0 0 10px 0 !important;
+}
+
+.side-vert.tile span,
+.bottom-rect.tile span,
+.side-vert.tile p,
+.bottom-rect.tile p,
+.side-vert.tile h3,
+.bottom-rect.tile h3 {
+  margin: 0 !important;
+}
+
+/* LIGHT MODE TILES */
+body.light .tile {
+  background: var(--glass-dark);
+}
+
+body.light .tile:hover {
+  background: rgba(0,0,0,0.32);
+}
+
+/* FOOTER */
+footer {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: white;
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
